@@ -9,7 +9,7 @@
 body {
     font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
     line-height: 1.6;
-    background-color: #f9f9f9;
+    background-color: #ffefce;
     color: #333;
 }
 
@@ -32,7 +32,7 @@ img {
 
 /* === HEADER & NAVIGASI === */
 header {
-    background-color: #ffffff;
+    background-color: #ffc983;
     border-bottom: 1px solid #ddd;
     padding: 1rem 2rem;
     position: sticky; /* Membuat header 'nempel' di atas */
