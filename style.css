@@ -282,4 +282,59 @@ footer {
     .detail-img {
         height: 250px;
     }
+
+    /* === HAMBURGER MENU (MOBILE) === */
+.hamburger {
+    display: none; /* Sembunyikan di Laptop */
+    cursor: pointer;
+}
+
+.bar {
+    display: block;
+    width: 25px;
+    height: 3px;
+    margin: 5px auto;
+    transition: all 0.3s ease-in-out;
+    background-color: #333; /* Warna garis hamburger */
+}
+
+/* === RESPONSIVE (HP) === */
+@media (max-width: 768px) {
+    .hamburger {
+        display: block; /* Munculkan hamburger di HP */
+    }
+
+    .hamburger.active .bar:nth-child(2) {
+        opacity: 0; /* Efek animasi saat diklik */
+    }
+    .hamburger.active .bar:nth-child(1) {
+        transform: translateY(8px) rotate(45deg);
+    }
+    .hamburger.active .bar:nth-child(3) {
+        transform: translateY(-8px) rotate(-45deg);
+    }
+
+    .nav-links {
+        position: absolute;
+        right: -100%; /* Sembunyikan di kanan layar */
+        top: 70px; /* Sesuaikan dengan tinggi header */
+        background-color: #ffc983; /* Samakan dengan warna header */
+        width: 100%;
+        flex-direction: column; /* Susun menu ke bawah */
+        align-items: center;
+        text-align: center;
+        transition: 0.3s; /* Efek geser halus */
+        box-shadow: 0 10px 10px rgba(0,0,0,0.1);
+        padding: 2rem 0;
+        display: flex; /* Timpa display:none yang lama */
+    }
+
+    .nav-links.active {
+        right: 0; /* Munculkan menu saat class 'active' ada */
+    }
+    
+    .nav-links li {
+        margin: 1.5rem 0;
+    }
+}
 }
