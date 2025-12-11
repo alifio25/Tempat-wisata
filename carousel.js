@@ -8,7 +8,8 @@ document.addEventListener('DOMContentLoaded', () => {
     if (!slides || images.length === 0) return;
 
     let counter = 0;
-    const size = images[0].clientWidth;
+// Menggunakan lebar container agar lebih akurat meskipun gambar belum load
+const size = slides.clientWidth;
     const totalImages = images.length;
 
     // 1. Fungsi untuk update posisi slide
