@@ -11,6 +11,8 @@ body {
     line-height: 1.6;
     background-color: #ffefce;
     color: #333;
+    width: 100%;
+    overflow-x: hidden;
 }
 
 main {
