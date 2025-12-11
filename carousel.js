@@ -3,44 +3,80 @@ document.addEventListener('DOMContentLoaded', () => {
     const images = document.querySelectorAll('.carousel-slide img');
     const prevBtn = document.querySelector('#prevBtn');
     const nextBtn = document.querySelector('#nextBtn');
+    const dotsContainer = document.querySelector('.carousel-dots'); // Ambil wadah dots
 
-    // Jika tidak ada carousel di halaman ini, stop script (biar gak error)
     if (!slides || images.length === 0) return;
 
     let counter = 0;
-// Menggunakan lebar container agar lebih akurat meskipun gambar belum load
-const size = slides.clientWidth;
+    // Menggunakan lebar container agar lebih akurat
+    const size = slides.clientWidth; 
     const totalImages = images.length;
 
-    // 1. Fungsi untuk update posisi slide
+    // --- 1. FUNGSI MEMBUAT DOTS OTOMATIS ---
+    function createDots() {
+        // Hapus dots lama jika ada (biar gak double)
+        dotsContainer.innerHTML = '';
+
+        images.forEach((_, index) => {
+            const dot = document.createElement('div');
+            dot.classList.add('dot');
+            // Set dot pertama jadi aktif
+            if (index === 0) dot.classList.add('active');
+            
+            // Tambah event click biar bisa loncat ke gambar tsb
+            dot.addEventListener('click', () => {
+                counter = index;
+                updateSlide();
+                updateDots();
+                resetTimer(); // Reset waktu auto slide
+            });
+
+            dotsContainer.appendChild(dot);
+        });
+    }
+
+    // --- 2. FUNGSI UPDATE TAMPILAN DOTS ---
+    function updateDots() {
+        const dots = document.querySelectorAll('.dot');
+        dots.forEach((dot, index) => {
+            if (index === counter) {
+                dot.classList.add('active');
+            } else {
+                dot.classList.remove('active');
+            }
+        });
+    }
+
+    // --- 3. UPDATE POSISI SLIDE ---
     function updateSlide() {
         slides.style.transform = 'translateX(' + (-size * counter) + 'px)';
     }
 
-    // 2. Fungsi Tombol Next
+    // --- LOGIKA TOMBOL NEXT/PREV ---
     function nextSlide() {
         if (counter >= totalImages - 1) {
-            counter = 0; // Kembali ke awal jika sudah mentok
+            counter = 0;
         } else {
             counter++;
         }
         updateSlide();
+        updateDots(); // Update dots saat geser
     }
 
-    // 3. Fungsi Tombol Prev
     function prevSlide() {
         if (counter <= 0) {
-            counter = totalImages - 1; // Ke akhir jika di awal
+            counter = totalImages - 1;
         } else {
             counter--;
         }
         updateSlide();
+        updateDots(); // Update dots saat geser
     }
 
     // Event Listener Tombol
     nextBtn.addEventListener('click', () => {
         nextSlide();
-        resetTimer(); // Reset waktu auto-slide jika diklik manual
+        resetTimer();
     });
 
     prevBtn.addEventListener('click', () => {
@@ -48,7 +84,7 @@ const size = slides.clientWidth;
         resetTimer();
     });
 
-    // 4. Fitur Auto Slide (Setiap 3 detik)
+    // Auto Slide
     let slideInterval = setInterval(nextSlide, 3000);
 
     function resetTimer() {
@@ -56,9 +92,13 @@ const size = slides.clientWidth;
         slideInterval = setInterval(nextSlide, 3000);
     }
 
-    // Responsif: Update ukuran saat layar di-resize
+    // Resize Event
     window.addEventListener('resize', () => {
         slides.style.transform = 'translateX(0px)';
         counter = 0;
+        updateDots();
     });
+
+    // --- JALANKAN FUNGSI PEMBUATAN DOTS SAAT PERTAMA KALI ---
+    createDots();
 });
